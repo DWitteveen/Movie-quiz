@@ -18,6 +18,12 @@ export default (state = null, {type, payload}) => {
         [payload.id]: payload
       }
 
+    // case FETCHED_ALL_QUESTIONS:
+    //  return {
+    //    ...state,
+    //    [payload.id]: payload
+    //  }  
+
     case UPDATE_GAMES:
       return payload.reduce((games, game) => {
         games[game.id] = game
@@ -28,3 +34,5 @@ export default (state = null, {type, payload}) => {
       return state
   }
 }
+
+

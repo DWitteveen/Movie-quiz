@@ -8,6 +8,8 @@ export const UPDATE_GAME = 'UPDATE_GAME'
 export const UPDATE_GAMES = 'UPDATE_GAMES'
 export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
 export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
+export const GET_QUESTION_BY_ID = 'GET_QUESTION_BY_ID'
+export const FETCHED_ALL_QUESTIONS = 'FETCHED_ALL_QUESTIONS'
 
 const updateGames = games => ({
   type: UPDATE_GAMES,
@@ -83,3 +85,26 @@ export const updateGame = (gameId, board) => (dispatch, getState) => {
     .then(_ => dispatch(updateGameSuccess()))
     .catch(err => console.error(err))
 }
+
+export const getQuestion = (questionId) => (dispatch) => {
+    
+  request
+    .get(`${baseUrl}/questions/:id`)
+    .then(response => dispatch({
+      type: GET_QUESTION_BY_ID,
+      payload: response
+    }))
+    .catch(err => alert(err))
+    
+  
+  }
+
+  export const fetchAllQuestions = (fetchAll) => (dispatch) => {
+    request
+    .get(`${baseUrl}/questions/`)
+    .then(response => dispatch({
+      type: FETCHED_ALL_QUESTIONS,
+      payload: response.body.question
+    }))
+    .catch(err => alert(err))
+  }

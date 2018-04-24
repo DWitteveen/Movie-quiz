@@ -18,19 +18,19 @@ export default class Question extends BaseEntity {
 
     @IsString()
     @Column('text', {nullable: false})
-    image1: string
+    imageA: string
 
     @IsString()
     @Column('text', {nullable: false})
-    image2: string
+    imageB: string
 
     @IsString()
     @Column('text', {nullable: false})
-    image3: string
+    imageC: string
 
     @IsString()
     @Column('text', {nullable: false})
-    image4: string
+    imageD: string
 
 
 }
