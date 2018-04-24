@@ -4,16 +4,11 @@ h2 {
 }
 
 .game-card {
-  margin: 10px 10px 10px 0px;
+  margin: 25px;
 }
 
 .create-game {
-  margin-top: 10px !important;
+  margin: 25px !important;
 }
 
-.outer-paper {
-  margin: auto;
-  margin-top: 20px;
-  padding: 20px;
-  width: 60%;
-}
+

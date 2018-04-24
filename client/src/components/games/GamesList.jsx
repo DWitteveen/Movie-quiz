@@ -4,7 +4,6 @@ import {getUsers} from '../../actions/users'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import Button from 'material-ui/Button'
-import Paper from 'material-ui/Paper'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import './GamesList.css'
@@ -38,10 +37,7 @@ class GamesList extends PureComponent {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button
-          size="small"
-          onClick={() => history.push(`/games/${game.id}`)}
-        >
+        <Button size="small" color="primary" variant="raised" onClick={() => history.push(`/games/${game.id}`)} >
           Watch
         </Button>
       </CardActions>
@@ -57,20 +53,20 @@ class GamesList extends PureComponent {
 
     if (games === null || users === null) return null
 
-    return (<Paper className="outer-paper">
+    return (<div>
       <Button
-        color="primary"
+        size="large"
+        color="secondary"
         variant="raised"
         onClick={createGame}
         className="create-game"
       >
         Create Game
       </Button>
-
       <div>
         {games.map(game => this.renderGame(game))}
       </div>
-    </Paper>)
+    </div>)
   }
 }
 

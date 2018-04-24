@@ -4,9 +4,10 @@ import {Redirect} from 'react-router-dom'
 import {getGames, joinGame, updateGame} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
-import Paper from 'material-ui/Paper'
-import Board from './Board'
+import board from '../../constants'
 import './GameDetails.css'
+import Button from 'material-ui/Button'
+import QuestionHolder from './questionHolder'
 
 class GameDetails extends PureComponent {
 
@@ -19,23 +20,25 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  makeMove = (toRow, toCell) => {
+  makeMove = (playerId, stepValue, questionNumber) => {
+    // player: as param to know who is using it
+    // stepValue: R(ight),W(rong)
+    // questionNumber we can get from component holding the function or button
+    // and use to know in which index of the array to store the step.
+    
+    //console.log('--> Makemove/ toRow: ', toRow);
     const {game, updateGame} = this.props
-
-    const board = game.board.map(
-      (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) return game.turn
-        else return cell
-      })
-    )
+    const board = game.board
+    console.log('---> Makemove/ board: ', board)
+    console.log('---> Makemove/ playerId: ', playerId)
+    console.log('---> Makemove/ stepValue: ', stepValue)
+    console.log('---> Makemove/ questionNumber: ', questionNumber)
     updateGame(game.id, board)
   }
 
-
-
   render() {
     const {game, users, authenticated, userId} = this.props
-
+    // Can we take the userId from here?
     if (!authenticated) return (
 			<Redirect to="/login" />
 		)
@@ -44,40 +47,27 @@ class GameDetails extends PureComponent {
     if (!game) return 'Not found'
 
     const player = game.players.find(p => p.userId === userId)
+    console.log('--> GameDetails/ player.userId? : ',userId);
+    
+    const winner = "unknown right now"
+    // const winner = game.players
+    //   .filter(p => p.symbol === game.winner)
+    //   .map(p => p.userId)[0]
+    //   console.log('-> winner: ', game.players);
+      
 
-    const winner = game.players
-      .filter(p => p.symbol === game.winner)
-      .map(p => p.userId)[0]
-
-    return (<Paper className="outer-paper">
+    return (
+      <div className="game-container">
       <h1>Game #{game.id}</h1>
-
-      <p>Status: {game.status}</p>
-
-      {
-        game.status === 'started' &&
-        player && player.symbol === game.turn &&
-        <div>It's your turn!</div>
-      }
-
       {
         game.status === 'pending' &&
-        game.players.map(p => p.userId).indexOf(userId) === -1 &&
-        <button onClick={this.joinGame}>Join Game</button>
+        game.players.map(p => p.userId).indexOf(userId) === -1 && 
+        <Button size="small" color="primary" variant="raised" onClick={this.joinGame}>Join Game</Button>
       }
-
-      {
-        winner &&
-        <p>Winner: {users[winner].firstName}</p>
-      }
-
-      <hr />
-
-      {
-        game.status !== 'pending' &&
-        <Board board={game.board} makeMove={this.makeMove} />
-      }
-    </Paper>)
+      <h3>{ `Player ${userId}` }</h3>
+      { game.status !== 'pending' && <QuestionHolder /> }
+      </div>
+    )
   }
 }
 
