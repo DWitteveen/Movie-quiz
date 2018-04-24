@@ -15,4 +15,22 @@ export default class Question extends BaseEntity {
     @IsString()
     @Column('text', {nullable: false})
     answer: string
+
+    @IsString()
+    @Column('text', {nullable: false})
+    image1: string
+
+    @IsString()
+    @Column('text', {nullable: false})
+    image2: string
+
+    @IsString()
+    @Column('text', {nullable: false})
+    image3: string
+
+    @IsString()
+    @Column('text', {nullable: false})
+    image4: string
+
+
 }
