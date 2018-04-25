@@ -15,7 +15,6 @@ class GameDetails extends PureComponent {
     if (this.props.authenticated) {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
-      // this.props.getQuestion()
       this.props.fetchAllQuestions()
     }
   }
@@ -72,10 +71,10 @@ class GameDetails extends PureComponent {
       
 
       <h3>{`${this.props.questions[0].question}`}</h3>
-      <img id="a" src = {`${this.props.questions[0].imageA} `} height={240} />
-      <img id="b" src = {`${this.props.questions[0].imageB} `} height={240} />
-      <img id="c" src = {`${this.props.questions[0].imageC} `} height={240} />
-      <img id="d" src = {`${this.props.questions[0].imageD} `} height={240} />
+      <img id="a" alt="" src = {`${this.props.questions[0].imageA} `} height={240} />
+      <img id="b" alt="" src = {`${this.props.questions[0].imageB} `} height={240} />
+      <img id="c" alt="" src = {`${this.props.questions[2].imageC} `} height={240} />
+      <img id="d" alt="" src = {`${this.props.questions[2].imageD} `} height={240} />
       {console.log(questions[0].answer)}
 
 
