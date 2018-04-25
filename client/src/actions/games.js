@@ -86,20 +86,23 @@ export const updateGame = (gameId, board) => (dispatch, getState) => {
     .catch(err => console.error(err))
 }
 
+
+//**************
+
 export const getQuestion = (questionId) => (dispatch) => {
     
   request
     .get(`${baseUrl}/questions/:id`)
+    // console.log(request.get(`${baseUrl}/questions/:id`))
     .then(response => dispatch({
       type: GET_QUESTION_BY_ID,
-      payload: response
+      payload: response.body.question
     }))
     .catch(err => alert(err))
-    
-  
   }
 
   export const fetchAllQuestions = (fetchAll) => (dispatch) => {
+    
     request
     .get(`${baseUrl}/questions/`)
     .then(response => dispatch({
@@ -108,3 +111,5 @@ export const getQuestion = (questionId) => (dispatch) => {
     }))
     .catch(err => alert(err))
   }
+
+  // export const storeAnswerIn

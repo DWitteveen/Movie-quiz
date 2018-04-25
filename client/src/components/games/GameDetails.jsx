@@ -15,7 +15,7 @@ class GameDetails extends PureComponent {
     if (this.props.authenticated) {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
-      if (this.props.question === null) this.props.getQuestion()
+      // this.props.getQuestion()
       this.props.fetchAllQuestions()
     }
   }
@@ -39,11 +39,13 @@ class GameDetails extends PureComponent {
   }
 
   render() {
-    const {game, users, authenticated, userId} = this.props
+    const {game, users, authenticated, userId, questions, question} = this.props
     // Can we take the userId from here?
     if (!authenticated) return (
 			<Redirect to="/login" />
-		)
+    )
+    
+    console.log(questions)
 
     if (game === null || users === null) return 'Loading...'
     if (!game) return 'Not found'
@@ -66,21 +68,37 @@ class GameDetails extends PureComponent {
         <Button size="small" color="primary" variant="raised" onClick={this.joinGame}>Join Game</Button>
       }
       <h3>{ `Player ${userId}` }</h3>
-      <h3>{`Question${question}` }</h3>
-      {/* <h2> {userId}{this.props.questions}</h2> */}
+      
+      
+
+      <h3>{`${this.props.questions[0].question}`}</h3>
+      <img id="a" src = {`${this.props.questions[0].imageA} `} height={240} />
+      <img id="b" src = {`${this.props.questions[0].imageB} `} height={240} />
+      <img id="c" src = {`${this.props.questions[0].imageC} `} height={240} />
+      <img id="d" src = {`${this.props.questions[0].imageD} `} height={240} />
+      {console.log(questions[0].answer)}
+
+
+
       { game.status !== 'pending' && <QuestionList /> } 
       </div>
-      //imported !!
+      
     )
   }
 }
+
+let testAnswer = [""];
+
+
 
 const mapStateToProps = (state, props) => ({
   authenticated: state.currentUser !== null,
   userId: state.currentUser && userId(state.currentUser.jwt),
   game: state.games && state.games[props.match.params.id],
   users: state.users,
-  questions: state.questions
+  questions: state.questions,
+  question: state.question
+
 })
 
 const mapDispatchToProps = {
