@@ -1,0 +1,14 @@
+h2 {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.game-card {
+  margin: 25px;
+}
+
+.create-game {
+  margin: 25px !important;
+}
+
+
