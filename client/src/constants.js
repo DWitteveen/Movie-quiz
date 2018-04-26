@@ -4,6 +4,8 @@ export const localStorageJwtKey = 'currentUserJwt'
 
 export const tempArray = [[],[]]
 
+export let round = 0
+
 export let playerNumber = 3;
 
 export function setValue(newValue) {
@@ -15,4 +17,10 @@ export function setValue(newValue) {
         playerNumber = 1
         console.log('playerNumber: ', playerNumber)
         }
+}
+
+export function setRoundHigher() {
+    round = round + 1
+    console.log('round: ',round);
+    
 }
