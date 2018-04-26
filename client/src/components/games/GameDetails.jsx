@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import {getGames, joinGame, updateGame, getQuestion, fetchAllQuestions} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
-import { tempArray, playerNumber, setValue} from '../../constants'
+import { tempArray, playerNumber, setValue, round, setRoundHigher} from '../../constants'
 import './GameDetails.css'
 import Button from 'material-ui/Button'
 //import { storeAnswerInBoard, sendAnswer, answerChecked } from './logic'
@@ -24,18 +24,31 @@ class GameDetails extends PureComponent {
 
 
   storeAnswerInBoard = (rightOrWrongFromDB) => {
-    console.log('-> tempArray ', tempArray);
-    tempArray[playerNumber].push(rightOrWrongFromDB)
+    console.log('rightOrWrongFromDb: ')
+    //console.log('-> tempArray ', tempArray);
+    //tempArray[playerNumber].push(rightOrWrongFromDB)
+    setRoundHigher()
+    this.render()
   }
 
   sendAnswer = (answer) => {
     console.log('sendAnswer: ', answer);
-    console.log(this.props.questions[0].answer);
+    this.answerChecked(answer)
+    
   }
 
   answerChecked = (answer) => {
-      //console.log('chosenAnswer: ', chosenAnswer);
-      
+    console.log('round: ', round)
+    console.log('answerChecked: ', answer);
+    console.log('right answer is: ',this.props.questions[round].answer);
+    let rightAnswer = this.props.questions[round].answer
+    if(answer === rightAnswer){
+      this.storeAnswerInBoard("r")
+      console.log(`--> question ${round} answered: Right! `)
+    } else {
+      this.storeAnswerInBoard("r")
+      console.log(`--> question ${round} answered: Wrong... `)
+    }
   }
     
   joinGame = () => this.props.joinGame(this.props.game.id)
@@ -63,12 +76,12 @@ class GameDetails extends PureComponent {
         game.players.map(p => p.userId).indexOf(userId) === -1 && 
         <Button size="small" color="primary" variant="raised" onClick={this.joinGame}>Join Game</Button>
       }
-      <h1>{`${this.props.questions[0].question}`} </h1>
+      <h1>{`${this.props.questions[round].question}`} </h1>
         <div>
-          <img className="img-holder" onClick={_ => this.sendAnswer("a")} src= {`${this.props.questions[0].imageA} `} alt="" height={240} />
-          <img className="img-holder" onClick={_ => this.sendAnswer("b")} src= {`${this.props.questions[0].imageB} `} alt="" height={240} />
-          <img className="img-holder" onClick={_ => this.sendAnswer("c")} src= {`${this.props.questions[0].imageC} `} alt="" height={240} />
-          <img className="img-holder" onClick={_ => this.sendAnswer("d")} src= {`${this.props.questions[0].imageD} `} alt="" height={240} />
+          <img className="img-holder" onClick={_ => this.sendAnswer("a")} src= {`${this.props.questions[round].imageA} `} alt="" height={240} />
+          <img className="img-holder" onClick={_ => this.sendAnswer("b")} src= {`${this.props.questions[round].imageB} `} alt="" height={240} />
+          <img className="img-holder" onClick={_ => this.sendAnswer("c")} src= {`${this.props.questions[round].imageC} `} alt="" height={240} />
+          <img className="img-holder" onClick={_ => this.sendAnswer("d")} src= {`${this.props.questions[round].imageD} `} alt="" height={240} />
         </div>
         
       </div>
